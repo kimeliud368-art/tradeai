@@ -1,0 +1,12 @@
+.status-pill {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: var(--text-xs);
+  font-weight: 500;
+}
+
+.status-pill.positive { background: var(--positive-dim); color: var(--positive); }
+.status-pill.negative { background: var(--negative-dim); color: var(--negative); }
+.status-pill.warning  { background: #3A2E14; color: var(--warning); }
+.status-pill.neutral  { background: var(--bg-elevated); color: var(--text-secondary); }

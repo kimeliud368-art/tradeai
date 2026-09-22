@@ -1,0 +1,90 @@
+:root {
+  /* --- Color: graphite-navy instrument panel, not pure black --- */
+  --bg-primary: #0B1220;
+  --bg-surface: #121B2E;
+  --bg-elevated: #1C2740;
+  --bg-elevated-hover: #223052;
+  --border-subtle: #263353;
+  --border-strong: #34456E;
+
+  --text-primary: #E8ECF4;
+  --text-secondary: #B4BCD0;
+  --text-muted: #7C8AA5;
+
+  --positive: #2DD4A7;      /* buy / gains */
+  --positive-dim: #16473C;  /* positive bg tint */
+  --negative: #F2545B;      /* sell / losses */
+  --negative-dim: #4A1E22;  /* negative bg tint */
+
+  --accent: #5B8DEF;        /* single brand accent: AI signals, links, active nav */
+  --accent-dim: #1B2C4F;
+  --accent-hover: #75A2F5;
+
+  --warning: #E8A33D;
+
+  /* --- Type --- */
+  --font-ui: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'SF Mono', Consolas, monospace;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.9375rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 2rem;
+
+  /* --- Spacing (8px base) --- */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 48px;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+
+  --content-max: 1180px;
+
+  --shadow-elevated: 0 4px 24px rgba(0, 0, 0, 0.28);
+}
+
+* { box-sizing: border-box; }
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-ui);
+  font-size: var(--text-base);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Numbers are always tabular mono — a misaligned balance is a trust bug */
+.num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+button, input, select {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+a { color: var(--accent); }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
