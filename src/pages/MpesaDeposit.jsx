@@ -1,3 +1,4 @@
+import { getExchangeRate } from '../api/exchangeRate';
 import { useEffect, useRef, useState } from 'react';
 import { createMpesaDeposit, pollDepositStatus } from '../api/deposits';
 import './MpesaDeposit.css';
@@ -13,6 +14,7 @@ export default function MpesaDeposit() {
   const [amount, setAmount] = useState('10000');
   const [phone, setPhone] = useState('');
   const [formError, setFormError] = useState(null);
+  const [rate, setRate] = useState(null);
   const [submitting, setSubmitting] = useState(false);
 
   const [depositId, setDepositId] = useState(null);
@@ -22,6 +24,10 @@ export default function MpesaDeposit() {
   const stopPolling = () => {
     if (pollRef.current) clearInterval(pollRef.current);
   };
+
+useEffect(() => {
+  getExchangeRate().then(setRate);
+}, []);
 
   useEffect(() => stopPolling, []);
 
@@ -114,7 +120,6 @@ export default function MpesaDeposit() {
       <h1 className="page-title">Deposit</h1>
       <form className="deposit-form" onSubmit={submit}>
         <div className="payment-method-badge">M-Pesa</div>
-
         <label className="field-label" htmlFor="amount">Amount (KES)</label>
         <input
           id="amount"
@@ -124,6 +129,11 @@ export default function MpesaDeposit() {
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
         />
+        {rate && (
+          <p className="field-hint">
+              ≈ ${(amount/ rate.rate).toFixed(2)} USD 
+          </p>
+          )}
 
         <label className="field-label" htmlFor="phone">Phone number</label>
         <div className="phone-input">

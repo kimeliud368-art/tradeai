@@ -1,6 +1,6 @@
 :root {
   /* --- Color: graphite-navy instrument panel, not pure black --- */
-  --bg-primary: #0B1220;
+  --bg-primary: #080D14;
   --bg-surface: #121B2E;
   --bg-elevated: #1C2740;
   --bg-elevated-hover: #223052;
@@ -16,9 +16,9 @@
   --negative: #F2545B;      /* sell / losses */
   --negative-dim: #4A1E22;  /* negative bg tint */
 
-  --accent: #5B8DEF;        /* single brand accent: AI signals, links, active nav */
-  --accent-dim: #1B2C4F;
-  --accent-hover: #75A2F5;
+  --accent: #2ECC8F;
+--accent-dim: #123526;
+--accent-hover: #4FE0A8;
 
   --warning: #E8A33D;
 

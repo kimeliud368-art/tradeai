@@ -1,43 +1,43 @@
+import '../components/StatCard.css';
 import { useEffect, useState } from 'react';
-import StatCard from '../components/StatCard';
-import AsyncState from '../components/AsyncState';
 import { getWallet } from '../api/wallet';
 import { mockAiSignal } from '../api/mocks/data';
-import './Dashboard.css';
 
 export default function Dashboard() {
   const [wallet, setWallet] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const load = () => {
-    setLoading(true);
-    setError(null);
+  useEffect(() => {
     getWallet()
-      .then(setWallet)
-      .catch(setError)
+      .then((data) => setWallet(data))
+      .catch((err) => setError(err))
       .finally(() => setLoading(false));
-  };
-
-  useEffect(load, []);
+  }, []);
 
   return (
-    <div className="dashboard">
-      <h1 className="page-title">Good morning</h1>
-
-      <AsyncState loading={loading} error={error} onRetry={load}>
-        {wallet && (
-          <div className="stat-row">
-            <StatCard label="Balance" value={`$${wallet.totalBalance.toFixed(2)}`} />
-            <StatCard label="Available" value={`$${wallet.availableBalance.toFixed(2)}`} />
-            <StatCard
-              label="P/L Today"
-              value={`${wallet.pnlToday >= 0 ? '+' : ''}$${wallet.pnlToday.toFixed(2)}`}
-              tone={wallet.pnlToday >= 0 ? 'positive' : 'negative'}
-            />
+    <div>
+      <h1 className="page-title">Dashboard</h1>
+      {loading && <p>Loading...</p>}
+      {error && <p>Something went wrong: {error.message}</p>}
+      {!loading && !error && wallet && (
+        <div className="stat-row">
+          <div className="stat-card">
+            <div className="stat-label">Balance</div>
+            <div className="stat-value num">${wallet.totalBalance.toFixed(2)}</div>
           </div>
-        )}
-      </AsyncState>
+          <div className="stat-card">
+            <div className="stat-label">Available</div>
+            <div className="stat-value num">${wallet.availableBalance.toFixed(2)}</div>
+          </div>
+          <div className="stat-card">
+            <div className="stat-label">P/L Today</div>
+            <div className={`stat-value num ${wallet.pnlToday >= 0 ? 'positive' : 'negative'}`}>
+              {wallet.pnlToday >= 0 ? '+' : ''}${wallet.pnlToday.toFixed(2)}
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="signal-card">
         <div className="signal-card-head">
@@ -47,19 +47,11 @@ export default function Dashboard() {
           </span>
         </div>
         <div className="signal-confidence">
-          <div className="signal-confidence-bar">
-            <div
-              className="signal-confidence-fill"
-              style={{ width: `${mockAiSignal.confidence}%` }}
-            />
-          </div>
           <span className="num">{mockAiSignal.confidence}% confidence</span>
         </div>
         <ul className="signal-analysis">
           {mockAiSignal.analysis.map((a) => (
-            <li key={a.label}>
-              <span className="dot positive" /> {a.label}: {a.value}
-            </li>
+            <li key={a.label}>{a.label}: {a.value}</li>
           ))}
         </ul>
         <button className="btn-primary">Review trade</button>
